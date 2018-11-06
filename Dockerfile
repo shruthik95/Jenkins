@@ -1,2 +1,2 @@
 FROM tomcat:latest
-COPY target/*.war /usr/local/tomcat/webapps/
+COPY target/src/* /usr/local/tomcat/webapps/

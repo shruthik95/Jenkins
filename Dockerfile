@@ -1,6 +1,24 @@
-FROM ubuntu
-RUN apt-get update -y 
+From ubuntu
+RUN apt-get update -y
 RUN apt-get install apache2 -y
-RUN service apache2 start
-COPY src /var/www/
-MAINTAINER Shruthi "ab2c@gmail.com"
+COPY src /var/www/html/
+
+RUN chown -R www-data:www-data /var/www
+
+
+ENV APACHE_RUN_USER  www-data
+ENV APACHE_RUN_GROUP www-data
+ENV APACHE_LOG_DIR   /var/log/apache2
+ENV APACHE_PID_FILE  /var/run/apache2/apache2.pid
+ENV APACHE_RUN_DIR   /var/run/apache2
+ENV APACHE_LOCK_DIR  /var/lock/apache2
+ENV APACHE_LOG_DIR   /var/log/apache2
+
+RUN mkdir -p $APACHE_RUN_DIR
+RUN mkdir -p $APACHE_LOCK_DIR
+RUN mkdir -p $APACHE_LOG_DIR
+EXPOSE 80
+
+CMD ["/usr/sbin/apache2", "-D", "FOREGROUND"]
+
+
